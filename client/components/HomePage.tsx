@@ -1,15 +1,44 @@
 import { useState, useEffect } from 'react'
 import { getGreeting } from '../apiClient.ts'
 import { Link } from 'react-router-dom'
+import HiddenWord from './HiddenWord.tsx'
 
 function HomePage() {
   const [targetWord, setTargetWord] = useState([] as string[])
   const [apiWord, setApiWord] = useState('')
 
-  const lettersArr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
-  
-  
+  const lettersArr = [
+    'A',
+    'B',
+    'C',
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J',
+    'K',
+    'L',
+    'M',
+    'N',
+    'O',
+    'P',
+    'Q',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+    'X',
+    'Y',
+    'Z',
+  ]
+
   useEffect(() => {
+    //--! Get a random word from the DB --!//
+
     const answerWord = 'HELLO'
 
     const myArr = []
@@ -19,13 +48,13 @@ function HomePage() {
 
     setTargetWord(myArr)
     setApiWord(answerWord)
-  },[])
+  }, [])
 
   function handleClick(e: React.MouseEvent<HTMLElement>) {
     const apiWordArr = apiWord.split('')
     const letterTyped = e.target.innerHTML
-    const newArr = apiWordArr.map((e,index) => {
-      if (targetWord[index]!=='_') return targetWord[index]
+    const newArr = apiWordArr.map((e, index) => {
+      if (targetWord[index] !== '_') return targetWord[index]
       if (e === letterTyped) return e
       else return '_'
     })
@@ -37,12 +66,13 @@ function HomePage() {
 
   return (
     <>
-      {targetWord.map((e, index) => (
-          <p style={{display:'inline-block', margin:'8px'}} key={index}>{e}</p>
-        ))}<br/>
-      {lettersArr.map((letter,index) => (
-          <button name={letter} onClick={handleClick} key={index}>{letter}</button>
-        ))}
+      <HiddenWord targetWord={targetWord} />
+      <br />
+      {lettersArr.map((letter, index) => (
+        <button name={letter} onClick={handleClick} key={index}>
+          {letter}
+        </button>
+      ))}
     </>
   )
 }
