@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react'
-import { getGreeting } from '../apiClient.ts'
-import { Link } from 'react-router-dom'
 import HiddenWord from './HiddenWord.tsx'
 import LettersUnused from './LettersUnused.tsx'
+import Hangman from './HangMan.tsx'
 
 function HomePage() {
   // const [targetWord, setTargetWord] = useState([] as string[])
@@ -15,11 +14,16 @@ function HomePage() {
     setApiWord(answerWord)
   }, [])
 
+  const incorrect = guessed.filter((letter) => {
+    return !apiWord.includes(letter)
+  })
+
   return (
     <>
       <HiddenWord apiWord={apiWord} guessed={guessed} />
       <br />
       <LettersUnused guessed={guessed} setGuessed={setGuessed} />
+      <Hangman tries={incorrect.length} />
     </>
   )
 }
