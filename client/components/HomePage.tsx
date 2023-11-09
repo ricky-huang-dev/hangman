@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom'
 import HiddenWord from './HiddenWord.tsx'
 
 function HomePage() {
-  const [targetWord, setTargetWord] = useState([] as string[])
+  // const [targetWord, setTargetWord] = useState([] as string[])
   const [apiWord, setApiWord] = useState('')
-
+  const [guessed, setGuessed] = useState([] as string[])
   const lettersArr = [
     'A',
     'B',
@@ -38,35 +38,18 @@ function HomePage() {
 
   useEffect(() => {
     //--! Get a random word from the DB --!//
-
     const answerWord = 'HELLO'
-
-    const myArr = []
-    for (let i = 0; i < answerWord.length; i++) {
-      myArr.push('_')
-    }
-
-    setTargetWord(myArr)
     setApiWord(answerWord)
   }, [])
 
   function handleClick(e: React.MouseEvent<HTMLElement>) {
-    const apiWordArr = apiWord.split('')
     const letterTyped = e.target.innerHTML
-    const newArr = apiWordArr.map((e, index) => {
-      if (targetWord[index] !== '_') return targetWord[index]
-      if (e === letterTyped) return e
-      else return '_'
-    })
-    setTargetWord(newArr)
-    if (targetWord.join('') === apiWord) {
-      alert('You win!')
-    }
+    setGuessed([...guessed, letterTyped])
   }
 
   return (
     <>
-      <HiddenWord targetWord={targetWord} />
+      <HiddenWord apiWord={apiWord} guessed={guessed} />
       <br />
       {lettersArr.map((letter, index) => (
         <button name={letter} onClick={handleClick} key={index}>
