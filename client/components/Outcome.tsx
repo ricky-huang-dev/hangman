@@ -4,20 +4,16 @@ interface Props {
 }
 function Outcome({ outcome, apiWord }: Props) {
   return (
-    <>
-      {outcome === 'win' && (
-        <div>
-          <p>You Win!</p>
-        </div>
-      )}
+    <div className="outcomes">
+      {outcome === 'win' && <div>You Win!</div>}
 
       {outcome === 'lose' && (
         <div>
-          <p>You lose ya fool!</p>
-          <p> The word was {apiWord}</p>
+          You lose ya fool! <br />
+          The word was {apiWord}
         </div>
       )}
-    </>
+    </div>
   )
 }
 

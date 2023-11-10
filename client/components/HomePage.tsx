@@ -28,7 +28,7 @@ function HomePage() {
     return !apiWord.includes(letter)
   })
 
-  if (outcome === '' && incorrect.length >= 7) {
+  if (outcome === '' && incorrect.length >= 6) {
     setOutcome('lose')
   } else if (
     outcome === '' &&
@@ -53,14 +53,18 @@ function HomePage() {
         </div>
       </div>
       <div className="letters">
-        <LettersUnused guessed={guessed} setGuessed={setGuessed} />
+        {outcome === '' && (
+          <LettersUnused guessed={guessed} setGuessed={setGuessed} />
+        )}
         <Outcome outcome={outcome} apiWord={apiWord} />
       </div>
-        {outcome === '' && (
-        <LettersUnused guessed={guessed} setGuessed={setGuessed} />
-      )}
-      {outcome !== '' && <button onClick={handleNewGame}>New game</button>}
-      <Hangman tries={incorrect.length} />
+      <div className="outcomes">
+        {outcome !== '' && (
+          <button className="newGameBtn" onClick={handleNewGame}>
+            New game
+          </button>
+        )}
+      </div>
     </>
   )
 }
