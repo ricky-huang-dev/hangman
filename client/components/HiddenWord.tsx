@@ -6,8 +6,6 @@ interface Props {
 function HiddenWord({ apiWord, guessed }: Props) {
   if (!apiWord) return
 
-  console.log(apiWord)
-
   const result = apiWord.split('').map((letter) => {
     return guessed.includes(letter) ? letter : '_'
   })

@@ -12,6 +12,7 @@ interface Props {
 
 function Hangman({ tries }: Props) {
   const imgUrl = [img0, img1, img2, img3, img4, img5, img6]
+  const index = Math.min(tries, imgUrl.length - 1)
 
   return (
     <>
