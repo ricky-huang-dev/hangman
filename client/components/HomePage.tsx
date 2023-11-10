@@ -3,6 +3,8 @@ import { getGreeting, getWord } from '../apiClient.ts'
 import { Link } from 'react-router-dom'
 import HiddenWord from './HiddenWord.tsx'
 import LettersUnused from './LettersUnused.tsx'
+import Hangman from './HangMan.tsx'
+import basepng from '../public/base.png'
 
 function HomePage() {
   // const [targetWord, setTargetWord] = useState([] as string[])
@@ -18,13 +20,17 @@ function HomePage() {
       })
   }, [])
 
-  // console.log(apiWord)
+  const incorrect = guessed.filter((letter) => {
+    console.log(!apiWord.includes(letter))
+    return !apiWord.includes(letter)
+  })
 
   return (
     <>
       <HiddenWord apiWord={apiWord} guessed={guessed} />
       <br />
       <LettersUnused guessed={guessed} setGuessed={setGuessed} />
+      <Hangman tries={incorrect.length} />
     </>
   )
 }
