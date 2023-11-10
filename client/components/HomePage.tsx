@@ -1,39 +1,36 @@
 import { useState, useEffect } from 'react'
-import { getGreeting } from '../apiClient.ts'
+import { getGreeting, getWord } from '../apiClient.ts'
 import { Link } from 'react-router-dom'
+import HiddenWord from './HiddenWord.tsx'
+import LettersUnused from './LettersUnused.tsx'
+import Hangman from './HangMan.tsx'
+import basepng from '../public/base.png'
 
 function HomePage() {
-  const [greeting, setGreeting] = useState('')
-  const [count, setCount] = useState(0)
-  const [isError, setIsError] = useState(false)
+  // const [targetWord, setTargetWord] = useState([] as string[])
+  const [apiWord, setApiWord] = useState('')
+  const [guessed, setGuessed] = useState([] as string[])
 
   useEffect(() => {
-    async function updateGreeting() {
-      try {
-        const greeting = await getGreeting()
-        setGreeting(greeting)
-        setIsError(false)
-      } catch (err) {
-        setIsError(true)
-      }
-    }
+    //--! Get a random word from the DB --!//
+    getWord()
+      .then((response) => setApiWord(response.words.toUpperCase()))
+      .catch((err) => {
+        console.error(err.message)
+      })
+  }, [])
 
-    updateGreeting()
-  }, [count])
+  const incorrect = guessed.filter((letter) => {
+    console.log(!apiWord.includes(letter))
+    return !apiWord.includes(letter)
+  })
 
   return (
     <>
-      {count}
-      <h1>{greeting}</h1>
-      {isError && (
-        <p style={{ color: 'red' }}>
-          There was an error retrieving the greeting.
-        </p>
-      )}
-      <button onClick={() => setCount(count + 1)}>Click</button>
-      <p>
-        <Link to="/frogs/kevin">Is there a frog named Kevin?</Link>
-      </p>
+      <HiddenWord apiWord={apiWord} guessed={guessed} />
+      <br />
+      <LettersUnused guessed={guessed} setGuessed={setGuessed} />
+      <Hangman tries={incorrect.length} />
     </>
   )
 }
