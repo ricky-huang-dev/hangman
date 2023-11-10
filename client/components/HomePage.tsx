@@ -3,6 +3,7 @@ import { getWord } from '../apiClient.ts'
 import HiddenWord from './HiddenWord.tsx'
 import LettersUnused from './LettersUnused.tsx'
 import Hangman from './HangMan.tsx'
+import Outcome from './Outcome.tsx'
 
 function HomePage() {
   // const [targetWord, setTargetWord] = useState([] as string[])
@@ -21,19 +22,25 @@ function HomePage() {
   const incorrect = guessed.filter((letter) => {
     return !apiWord.includes(letter)
   })
-  if (incorrect.length >= 7) {
+
+  if (outcome === '' && incorrect.length >= 7) {
     setOutcome('lose')
-  } else if (apiWord.split('').every((letter) => guessed.includes(letter))) {
+  } else if (
+    outcome === '' &&
+    guessed.length > 0 &&
+    apiWord.length > 0 &&
+    apiWord.split('').every((letter) => guessed.includes(letter))
+  ) {
     setOutcome('win')
   }
 
   return (
     <>
+      <Outcome outcome={outcome} />
       <HiddenWord apiWord={apiWord} guessed={guessed} />
       <br />
       <LettersUnused guessed={guessed} setGuessed={setGuessed} />
       <Hangman tries={incorrect.length} />
-      <></>
     </>
   )
 }
