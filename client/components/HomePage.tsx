@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import HiddenWord from './HiddenWord.tsx'
 import LettersUnused from './LettersUnused.tsx'
 import Hangman from './HangMan.tsx'
+import basepng from '../public/base.png'
 
 function HomePage() {
   // const [targetWord, setTargetWord] = useState([] as string[])
@@ -15,6 +16,7 @@ function HomePage() {
   }, [])
 
   const incorrect = guessed.filter((letter) => {
+    console.log(!apiWord.includes(letter))
     return !apiWord.includes(letter)
   })
 
