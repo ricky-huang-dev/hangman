@@ -46,10 +46,17 @@ function HomePage() {
 
   return (
     <>
-      <Outcome outcome={outcome} apiWord={apiWord} />
-      <HiddenWord apiWord={apiWord} guessed={guessed} />
-      <br />
-      {outcome === '' && (
+      <div className="container">
+        <Hangman tries={incorrect.length} />
+        <div className="guessWordContainer">
+          <HiddenWord apiWord={apiWord} guessed={guessed} />
+        </div>
+      </div>
+      <div className="letters">
+        <LettersUnused guessed={guessed} setGuessed={setGuessed} />
+        <Outcome outcome={outcome} apiWord={apiWord} />
+      </div>
+        {outcome === '' && (
         <LettersUnused guessed={guessed} setGuessed={setGuessed} />
       )}
       {outcome !== '' && <button onClick={handleNewGame}>New game</button>}
