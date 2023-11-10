@@ -9,3 +9,9 @@ export async function getGreeting(): Promise<string> {
 // Create a DB with radom words and categories.
 //  Get iamges for HangMan
 // Five tries
+
+export async function getWord() {
+  const res = await request.get('/api/v1/words')
+  console.log(res.body)
+  return res.body
+}

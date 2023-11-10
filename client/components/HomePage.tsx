@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { getGreeting } from '../apiClient.ts'
+import { getGreeting, getWord } from '../apiClient.ts'
 import { Link } from 'react-router-dom'
 import HiddenWord from './HiddenWord.tsx'
 import LettersUnused from './LettersUnused.tsx'
@@ -11,9 +11,14 @@ function HomePage() {
 
   useEffect(() => {
     //--! Get a random word from the DB --!//
-    const answerWord = 'HELLO'
-    setApiWord(answerWord)
+    getWord()
+      .then((response) => setApiWord(response.words.toUpperCase()))
+      .catch((err) => {
+        console.error(err.message)
+      })
   }, [])
+
+  // console.log(apiWord)
 
   return (
     <>
