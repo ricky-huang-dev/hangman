@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react'
-import { getGreeting, getWord } from '../apiClient.ts'
-import { Link } from 'react-router-dom'
+import { getWord } from '../apiClient.ts'
 import HiddenWord from './HiddenWord.tsx'
 import LettersUnused from './LettersUnused.tsx'
 import Hangman from './HangMan.tsx'
-import basepng from '../public/base.png'
 
 function HomePage() {
   // const [targetWord, setTargetWord] = useState([] as string[])
   const [apiWord, setApiWord] = useState('')
   const [guessed, setGuessed] = useState([] as string[])
-
+  const [outcome, setOutcome] = useState('')
   useEffect(() => {
     //--! Get a random word from the DB --!//
     getWord()
@@ -21,9 +19,13 @@ function HomePage() {
   }, [])
 
   const incorrect = guessed.filter((letter) => {
-    console.log(!apiWord.includes(letter))
     return !apiWord.includes(letter)
   })
+  if (incorrect.length >= 7) {
+    setOutcome('lose')
+  } else if (apiWord.split('').every((letter) => guessed.includes(letter))) {
+    setOutcome('win')
+  }
 
   return (
     <>
@@ -31,6 +33,7 @@ function HomePage() {
       <br />
       <LettersUnused guessed={guessed} setGuessed={setGuessed} />
       <Hangman tries={incorrect.length} />
+      <></>
     </>
   )
 }
