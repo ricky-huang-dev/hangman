@@ -1,7 +1,8 @@
 interface Props {
   outcome: string
+  apiWord: string
 }
-function Outcome({ outcome }: Props) {
+function Outcome({ outcome, apiWord }: Props) {
   return (
     <>
       {outcome === 'win' && (
@@ -13,6 +14,7 @@ function Outcome({ outcome }: Props) {
       {outcome === 'lose' && (
         <div>
           <p>You lose ya fool!</p>
+          <p> The word was {apiWord}</p>
         </div>
       )}
     </>

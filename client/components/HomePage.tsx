@@ -10,14 +10,19 @@ function HomePage() {
   const [apiWord, setApiWord] = useState('')
   const [guessed, setGuessed] = useState([] as string[])
   const [outcome, setOutcome] = useState('')
+
   useEffect(() => {
     //--! Get a random word from the DB --!//
+    game()
+  }, [])
+
+  function game() {
     getWord()
       .then((response) => setApiWord(response.words.toUpperCase()))
       .catch((err) => {
         console.error(err.message)
       })
-  }, [])
+  }
 
   const incorrect = guessed.filter((letter) => {
     return !apiWord.includes(letter)
@@ -33,13 +38,21 @@ function HomePage() {
   ) {
     setOutcome('win')
   }
+  function handleNewGame() {
+    game()
+    setOutcome('')
+    setGuessed([])
+  }
 
   return (
     <>
-      <Outcome outcome={outcome} />
+      <Outcome outcome={outcome} apiWord={apiWord} />
       <HiddenWord apiWord={apiWord} guessed={guessed} />
       <br />
-      <LettersUnused guessed={guessed} setGuessed={setGuessed} />
+      {outcome === '' && (
+        <LettersUnused guessed={guessed} setGuessed={setGuessed} />
+      )}
+      {outcome !== '' && <button onClick={handleNewGame}>New game</button>}
       <Hangman tries={incorrect.length} />
     </>
   )

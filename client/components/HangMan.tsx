@@ -16,7 +16,6 @@ function Hangman({ tries }: Props) {
 
   return (
     <>
-      <div>{tries}</div>
       <div>
         <img src={imgUrl[index]} alt="" />
       </div>
