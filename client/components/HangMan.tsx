@@ -15,9 +15,9 @@ function Hangman({ tries }: Props) {
 
   return (
     <>
-      <div>{tries}</div>
+      <div className="numberOfGuesses">Number of wrong guesses: {tries}</div>
       <div>
-        <img src={imgUrl[tries]} alt="" />
+        <img className="hangmanImage" src={imgUrl[tries]} alt="" />
       </div>
     </>
   )

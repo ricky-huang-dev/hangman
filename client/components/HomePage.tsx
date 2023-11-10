@@ -27,10 +27,15 @@ function HomePage() {
 
   return (
     <>
-      <HiddenWord apiWord={apiWord} guessed={guessed} />
-      <br />
-      <LettersUnused guessed={guessed} setGuessed={setGuessed} />
-      <Hangman tries={incorrect.length} />
+      <div className="container">
+        <Hangman tries={incorrect.length} />
+        <div className="guessWordContainer">
+          <HiddenWord apiWord={apiWord} guessed={guessed} />
+        </div>
+      </div>
+      <div className="letters">
+        <LettersUnused guessed={guessed} setGuessed={setGuessed} />
+      </div>
     </>
   )
 }

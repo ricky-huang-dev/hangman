@@ -42,6 +42,7 @@ function LettersUnused({ guessed, setGuessed }: Props) {
 
   return lettersArr.map((letter, index) => (
     <button
+      className="letterButton"
       name={letter}
       onClick={handleClick}
       key={index}

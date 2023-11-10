@@ -13,9 +13,9 @@ function HiddenWord({ apiWord, guessed }: Props) {
   })
 
   return result.map((e, index) => (
-    <p style={{ display: 'inline-block', margin: '8px' }} key={index}>
+    <div key={index} className="guessWord">
       {e}
-    </p>
+    </div>
   ))
 }
 
